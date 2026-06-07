@@ -103,7 +103,31 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 > [!TIP]
 > 在 Codex 中，如果内置 ImageGen 可用，通常不需要配置 API key。你可以直接让 agent 使用这个 skill 生成一张科研图。
 
-如果当前 agent 没有内置 ImageGen，但支持图片生成 API，也可以继续使用本 skill。你只需要在当前 agent 或平台里配置图片 API 所需的信息，例如：
+如果当前 agent 没有内置 ImageGen，但你有图片生成 API，也可以继续使用本 skill。仓库提供了一个可选的 OpenAI 兼容 API adapter：`scripts/image_gen.py`。
+
+安装依赖：
+
+```bash
+pip install -r requirements.txt
+```
+
+配置环境变量：
+
+```bash
+export OPENAI_API_KEY="your-api-key"
+export OPENAI_BASE_URL="https://your-openai-compatible-endpoint/v1"  # 可选
+export SCIDRAW_IMAGE_MODEL="gpt-image-2"                             # 可选
+```
+
+生成一张图：
+
+```bash
+python scripts/image_gen.py \
+  --prompt "Create one scientific roadmap figure, 16:9, clean academic style." \
+  --out outputs/figure.png
+```
+
+如果你不使用这个脚本，也可以在当前 agent 或平台里配置图片 API 所需的信息，例如：
 
 - 图片模型名
 - API key
