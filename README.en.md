@@ -1,38 +1,45 @@
 # SciDraw AI Scientific Illustration Skill
 
-## What this skill is
+[![中文](https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-red)](./README.md)
 
-This is a **single-image scientific figure skill** for Codex-style agents.
+This is a **single-image** scientific illustration skill for Codex-style agents.
 
-- One request produces **one** image.
-- Built for researchers, students, and team members who need fast scientific visuals.
-- Supports diagram types: mechanisms, roadmaps, workflows, model diagrams, comparison charts, and explanation figures.
-- Does **not** output editable PPT or vector/SVG by default.
+Each request generates exactly one image.  
+This repo does not aim at full editable pipeline output, PPT assembly, or SVG editor workflows.
 
-## About SciDraw AI
+> [!TIP]
+> For full production workflows (batch generation, edit-ready flow, SVG export, and platform workflows), use SciDraw directly:
+>
+> - https://sci-draw.com/
+> - https://sci-draw.com/ai-scientific-illustration
+> - https://sci-draw.com/convert
 
-This skill only covers the one-image generation part.  
-If you need more production features (full workflow, multi-image projects, SVG/vector export, higher-volume editing, template management), please use SciDraw AI directly:
+## Friendly note
 
-- Website: https://sci-draw.com/
-- Image generation: https://sci-draw.com/ai-scientific-illustration
-- Convert to editable/vector workflows: https://sci-draw.com/convert
-- Pricing / accounts: https://sci-draw.com/pricing
+This skill is optimized for “quick one-image delivery” in an agent workflow.
 
-## Why this is still useful
+- Priority: use Codex built-in image generation.
+- Optional fallback: `image_gen.py` CLI/API mode when built-in generation is unavailable.
+- If you frequently use the same output settings, you can lock your preferred prompt structure once and reuse it.
 
-- Quick single-figure generation inside an agent workflow.
-- Keeps prompts controlled and reproducible.
-- Good for one-off figure creation, review, and iteration inside chat workflows.
-- Easy fallback path via CLI/API when built-in image is unavailable.
+## Features
 
-## Install this skill
+- Single-image output per invocation.
+- Works for scientific roadmaps, mechanism diagrams, method flows, model architecture charts, and comparison visuals.
+- Supports source-anchored generation when strict preservation is required.
+- Simple and explicit workflow, suitable for iterative review inside chat.
 
-Recommended sentence for your agent:
+## Installation
 
-> Please install this skill from: `https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill`
+### One-sentence install (recommended)
 
-Manual (Codex):
+Tell your agent:
+
+```text
+Please install this skill for me: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
+```
+
+### Manual install (Codex)
 
 ```bash
 npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
@@ -41,40 +48,11 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
   --global
 ```
 
-Then restart your agent.
+Restart your agent afterwards.
 
-## How to use (important)
+## API fallback configuration
 
-Please give the request in one message, usually with:
-
-1. Output intent (`mechanism diagram`, `roadmap`, `methods flow`, `model architecture`).
-2. Aspect ratio (`16:9`, `4:3`, `1:1` etc).
-3. Language and label density (`Academic Chinese/English`, dense or concise).
-4. Color / style preference.
-5. Whether source figures must be strictly preserved.
-6. Confirm `single image output`.
-
-Example:
-
-```text
-Generate one high-quality scientific roadmap image (16:9), Chinese labels.
-Topic: ...
-Main flow: research question -> methods -> experiments -> validation.
-Color theme: muted blue + neutral background.
-If source labels/axes are provided, keep them as strict inputs.
-Only one image output.
-```
-
-### Built-in vs API mode
-
-- Built-in image tool (recommended): preferred in Codex environments.
-- Fallback API/CLI mode: used when built-in image is unavailable or explicitly requested.
-
-## Fallback CLI mode
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py bootstrap
-```
+Only required when built-in image generation cannot be used.
 
 ```bash
 python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py config \
@@ -83,13 +61,41 @@ python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.p
   --model gpt-image-2
 ```
 
+Health check:
+
 ```bash
 python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py doctor --check-api
 ```
 
+## How to use
+
+1. Define purpose (roadmap/flow/mechanism/architecture).
+2. Specify aspect ratio (`16:9`, `4:3`, `1:1`).
+3. Define language and label density.
+4. Define structure and logic chain (question → method → result → validation).
+5. Tell if source labels/axes/units must be strictly preserved.
+6. Confirm single-image output.
+
+Example:
+
+```text
+Generate one scientific figure in 16:9.
+Use Chinese labels and keep layout logic clear.
+Topic: ...
+Flow: Problem -> Method -> Data -> Validation.
+Keep key labels and numeric units unchanged.
+Output only one image.
+```
+
+## Fallback CLI usage (optional)
+
+```bash
+python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py bootstrap
+```
+
 ```bash
 python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
-  --prompt "A clear scientific figure ..." \
+  --prompt "Generate one scientific mechanism diagram, 16:9, academic style." \
   --size 2560x1440 \
   --quality medium \
   --out scidraw-ai-scientific-illustration-skill/outputs/figure.png
@@ -98,46 +104,53 @@ python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
 `image_gen.py` options:
 
 - `--prompt-file /path/to/prompt.txt`
-- `--prompt-file -` (read from stdin)
+- `--prompt-file -` (stdin)
 - `--dry-run`
 - `--json`
 
-## Example gallery (R2 assets)
+## Case Gallery (downloaded from this repo R2 assets)
 
-These are existing images hosted in this repo’s public R2 bucket:
+### 1. Funding Roadmap
 
-- [Funding roadmap 1](https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/sAlNGOlGoTRXz1TZXq8um4wi7n54PEF9/7aebfaf4-a4ba-44bf-8c28-b47624c5ded8/51e4735f-bab4-4921-a224-b655f7fca2cb.png)
-- [NSFC technical roadmap](https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/OcMVhRBPIurfOZ9nepCLqhxRfive9tED/d961261e-6a3a-494a-ad48-5c8539aa2b34/83eb825f-4601-498f-b05a-5daca5031869.png)
-- [Research logic map](https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/DgVKMzbihz31LyqEQ9Ib2JmbPh1GBKkW/93e27e3a-3c41-47ac-b5ab-79e33310fbc6/8b927d5c-539f-47e1-ba78-708710a0dc07.png)
-- [Digital twin workflow](https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/a7lq8FcdQN8wJnJFW9qcpAxmclSSjWRA/142fef6e-b3a1-40aa-b88a-3f78a14f3ce3/0ab31310-0a61-4fa1-9112-e0ae6156cb7b.png)
-- [Evidence chain diagram](https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/fEkof8JSRYXtMgSqmLXjvyK67EK32ac1/4674d3fb-9938-411d-a41f-1569bca591ef/23609505-f571-40ef-922f-7e68fb988702.png)
-- [Hydrogel roadmap](https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/iFIkRCMAHl48AicZhtEjkA7pUFhCE4dO/f1598d6a-cc8a-462e-b01d-9f7074fbdd79/f563dd8d-17c8-4816-a5f8-a888cdeee094.png)
+![Funding Roadmap](assets/examples/case-1-funding-roadmap.png)
 
-If you want local copies, run:
+### 2. NSFC Technical Roadmap
 
-```bash
-mkdir -p examples && cd examples
-curl -L -O "https://pub-8c0ddfa5c0454d40822bc9944fe6f303.r2.dev/ai-drawings/sAlNGOlGoTRXz1TZXq8um4wi7n54PEF9/7aebfaf4-a4ba-44bf-8c28-b47624c5ded8/51e4735f-bab4-4921-a224-b655f7fca2cb.png"
-```
+![NSFC Technical Roadmap](assets/examples/case-2-nsfc-roadmap.png)
+
+### 3. Research Logic Map
+
+![Research Logic Map](assets/examples/case-3-research-logic.png)
+
+### 4. Digital Twin Workflow
+
+![Digital Twin Workflow](assets/examples/case-4-digital-twin.png)
 
 ## FAQ
 
-- **Does this skill do SVG export?**  
-  Not directly. For SVG/可编辑/多页 workflows, use SciDraw AI platform.
-- **Do I need an API key?**  
-  Usually not in environments with built-in image generation. Required only when using fallback API mode.
-- **Can this generate one image only?**  
-  Yes, by design.
+- Does this skill export SVG or editable PPT?  
+  No. For SVG/editable flows, use SciDraw’s web platform.
+- Do I need an API key?  
+  Usually no, when built-in image generation is available.
+- Can I generate multiple images at once?  
+  No. This skill is intentionally single-output.
+- Is source input preserved?  
+  It can be preserved when the prompt explicitly requires strict retention.
 
-## Folder structure
+## Structure
 
 ```text
 scidraw-ai-scientific-illustration-skill/
 ├── SKILL.md
 ├── README.md
 ├── README.en.md
-├── README.zh-CN.md
 ├── requirements.txt
+├── assets/
+│   └── examples/
+│       ├── case-1-funding-roadmap.png
+│       ├── case-2-nsfc-roadmap.png
+│       ├── case-3-research-logic.png
+│       └── case-4-digital-twin.png
 └── scripts/
     ├── codex_scidraw_runtime.py
     └── image_gen.py
