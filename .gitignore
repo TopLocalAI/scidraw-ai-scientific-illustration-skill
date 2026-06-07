@@ -1,0 +1,7 @@
+# Generated output files (keep local workspace clean)
+outputs/
+output/
+runtime/
+cache/
+logs/
+.env
