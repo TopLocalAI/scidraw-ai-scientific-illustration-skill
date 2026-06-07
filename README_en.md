@@ -103,36 +103,14 @@ Restart Codex after installation.
 > [!TIP]
 > In Codex, if built-in ImageGen is available, you usually do not need an API key.
 
-If the current agent does not provide built-in ImageGen but you have an image generation API, this skill can still be used. This repository includes an optional OpenAI-compatible API adapter: `scripts/image_gen.py`.
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Configure environment variables:
-
-```bash
-export OPENAI_API_KEY="your-api-key"
-export OPENAI_BASE_URL="https://your-openai-compatible-endpoint/v1"  # optional
-export SCIDRAW_IMAGE_MODEL="gpt-image-2"                             # optional
-```
-
-Generate one image:
-
-```bash
-python scripts/image_gen.py \
-  --prompt "Create one scientific roadmap figure, 16:9, clean academic style." \
-  --out outputs/figure.png
-```
-
-If you do not use this script, configure the API details required by your current agent or platform, such as:
+If the current agent does not provide built-in ImageGen but you have an image generation API, this skill can still be used. Provide the key details required by your API service to the agent, such as:
 
 - image model name
 - API key
 - base URL
 - any additional image generation parameters required by the current agent
+
+The concrete API adapter instructions live in `SKILL.md` and are meant for the agent to read and execute when needed. Ordinary users do not need to run the script manually.
 
 If the current environment has neither built-in ImageGen nor an available image API, use [SciDraw AI online](https://sci-draw.com/ai-drawing).
 
