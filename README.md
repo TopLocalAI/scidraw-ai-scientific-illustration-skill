@@ -5,7 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
-一个面向 Codex 的科研画图 skill，也可在 Claude Code、OpenClaw、Hermes Agent 等支持 `SKILL.md` 的 agent 中使用。它的目标非常明确：把研究想法、论文方法、基金路线、实验流程或模型结构转换成**一张高质量科研图像**。
+一个面向 Codex 的科研画图 skill，也可在 Claude Code、OpenClaw、Hermes Agent 等支持 `SKILL.md` 的 agent 中使用。它的目标非常明确：把研究想法、论文方法、基金路线、实验流程或模型结构转换成高质量科研图像。
 
 > [!TIP]
 > 这个 skill 支持两类生成路径：Codex 内置 ImageGen，或当前 agent 已配置好的图片生成 API。  
@@ -15,17 +15,17 @@
 > - [SciDraw AI 官网](https://sci-draw.com/)
 > - [图片转 SVG/PPTX/PDF/TIFF 等转换工具](https://sci-draw.com/convert)
 >
-> SciDraw AI 平台支持 AI Drawing、草图转专业图、图片编辑、SVG/PPTX 可编辑导出、PNG/PDF/TIFF 出版级导出等能力；本 skill 只覆盖 agent 里的“单图生成”流程。
+> SciDraw AI 平台支持 AI Drawing、草图转专业图、图片编辑、SVG/PPTX 可编辑导出、PNG/PDF/TIFF 出版级导出等能力；本 skill 覆盖 agent 里的科研图生成与提示词整理流程。
 
 ## 温馨提示
 
-这个 skill 不是完整的 SciDraw AI 产品，也不是可编辑 PPT 或 SVG 生成器。它更像一个轻量工作流：在 agent 对话中，让模型先理解你的科研表达目标，再优先调用内置 ImageGen 生成一张图。
+这个 skill 不是完整的 SciDraw AI 产品，也不是可编辑 PPT 或 SVG 生成器。它更像一个轻量工作流：在 agent 对话中，让模型先理解你的科研表达目标，再优先调用内置 ImageGen 生成科研图初稿。
 
 如果你已经在使用 SciDraw AI 网站，建议把这个 skill 当作补充：用于在 Codex 里快速试图、沉淀提示词、整理科研图结构；最终需要 SVG、PPTX、批量转换或出版格式导出时，再回到 SciDraw AI 平台完成。
 
 ## 特点
 
-- 单图输出：每次 invocation 只生成 1 张图，减少多图混乱和风格漂移。
+- 逐图迭代：默认按单幅科研图组织提示词和输出，方便确认结构、风格和标签；需要多张图时可以按图逐张生成。
 - Codex 优先：在支持内置 ImageGen 的环境中，默认走内置图像能力，不要求 API key。
 - 支持图片 API：如果当前 agent 支持外部图片 API，可使用用户已配置的模型、API key 和 base URL 完成生成。
 - 无可用生成后端时给出替代入口：如果既没有 ImageGen，也没有图片 API，再提示使用 SciDraw AI 网站。
@@ -59,7 +59,7 @@
 
 ## 输出结构
 
-默认每次只产出一个图片文件：
+默认按单幅科研图产出图片文件，便于逐张确认和继续修改：
 
 ```text
 {输出目录}/
@@ -101,7 +101,7 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 ## ImageGen 与 API
 
 > [!TIP]
-> 在 Codex 中，如果内置 ImageGen 可用，通常不需要配置 API key。你可以直接让 agent 使用这个 skill 生成一张科研图。
+> 在 Codex 中，如果内置 ImageGen 可用，通常不需要配置 API key。你可以直接让 agent 使用这个 skill 生成科研图。
 
 如果当前 agent 没有内置 ImageGen，但你有图片生成 API，也可以继续使用本 skill。你只需要把当前 API 服务要求的关键信息提供给 agent，例如：
 
@@ -119,7 +119,7 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 在 Codex、Claude Code、OpenClaw 或 Hermes Agent 中明确指定使用本 skill，例如：
 
 ```text
-请使用 scidraw-scientific-figure skill 生成一张 16:9 的国自然技术路线图。
+请使用 scidraw-scientific-figure skill 生成 16:9 的国自然技术路线图。
 ```
 
 建议你的提示词包含这些信息：
@@ -134,8 +134,8 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 示例提示词：
 
 ```text
-请使用 scidraw-scientific-figure skill 生成一张科研技术路线图。
-比例：16:9 横版，只输出 1 张图。
+请使用 scidraw-scientific-figure skill 生成科研技术路线图。
+比例：16:9 横版。
 主题：基于多组学数据的疾病分型与生物标志物发现。
 结构：数据采集 -> AI 融合建模 -> 可解释性分析 -> 患者分层 -> 临床验证。
 风格：白底，蓝绿色学术配色，模块清晰，箭头方向明确。
@@ -170,8 +170,8 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
   在 Codex 内置 ImageGen 可用时可以直接用；如果没有内置能力，但当前 agent 已配置图片 API，也可以使用 API 生成。
 - 这个 skill 能生成 SVG 吗？  
   这个 skill 本身输出图片。需要 SVG/PPTX 可编辑导出时，请使用 SciDraw AI 平台的转换工具。
-- 可以一次生成多张图吗？  
-  不建议。本 skill 的设计原则是每次只输出 1 张图。
+- 可以生成多张图吗？  
+  可以，但建议按图逐张生成，这样更容易控制每张图的结构、标签和风格一致性。需要批量转换、可编辑导出或完整项目管理时，建议使用 SciDraw AI 平台。
 - 生成的图能直接投稿吗？  
   需要作者核对科学准确性、标签、单位和期刊格式。SciDraw AI 平台提供更完整的导出与转换流程。
 

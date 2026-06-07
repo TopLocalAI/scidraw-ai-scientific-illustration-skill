@@ -5,7 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
-A Codex-oriented skill for generating **one scientific figure image per request**. It can also be used in Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
+A Codex-oriented skill for generating high-quality scientific figure images. It can also be used in Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
 
 > [!TIP]
 > This skill supports two generation routes: Codex built-in ImageGen, or an image generation API already configured in the current agent.  
@@ -15,17 +15,17 @@ A Codex-oriented skill for generating **one scientific figure image per request*
 > - [SciDraw AI website](https://sci-draw.com/)
 > - [Convert tools for SVG/PPTX/PDF/TIFF workflows](https://sci-draw.com/convert)
 >
-> The SciDraw AI platform supports AI Drawing, sketch-to-professional-figure workflows, image editing, editable SVG/PPTX export, and publication-ready PNG/PDF/TIFF export. This skill only covers single-image generation inside agent workflows.
+> The SciDraw AI platform supports AI Drawing, sketch-to-professional-figure workflows, image editing, editable SVG/PPTX export, and publication-ready PNG/PDF/TIFF export. This skill covers scientific figure generation and prompt structuring inside agent workflows.
 
 ## Friendly Note
 
-This skill is not the full SciDraw AI product, and it is not an editable PPT or SVG generator. It is a lightweight agent workflow: the agent interprets your scientific communication goal and preferably uses built-in ImageGen to generate one scientific figure image.
+This skill is not the full SciDraw AI product, and it is not an editable PPT or SVG generator. It is a lightweight agent workflow: the agent interprets your scientific communication goal and preferably uses built-in ImageGen to generate a scientific figure draft.
 
 If you already use SciDraw AI on the web, treat this skill as a companion tool for quick drafts, prompt refinement, and structure planning inside Codex. For SVG, PPTX, batch conversion, and production export, return to the SciDraw AI platform.
 
 ## Features
 
-- Single-image output: one invocation produces one figure.
+- Figure-by-figure iteration: by default, the skill structures prompts and outputs around one scientific figure at a time, making layout, labels, and style easier to review. Multi-figure work can be generated figure by figure.
 - Built-in ImageGen first: in Codex-style environments, no API key is usually required.
 - Image API support: if the current agent supports an external image API, use the configured model, API key, and base URL.
 - Alternative when no backend is available: if there is neither ImageGen nor an image API, use SciDraw AI online.
@@ -59,7 +59,7 @@ If you already use SciDraw AI on the web, treat this skill as a companion tool f
 
 ## Output Structure
 
-By default, each run produces one image file:
+By default, the skill outputs an image file for the current scientific figure, making it easy to review and refine each figure:
 
 ```text
 {output_dir}/
@@ -119,7 +119,7 @@ If the current environment has neither built-in ImageGen nor an available image 
 Ask Codex, Claude Code, OpenClaw, or Hermes Agent to use this skill explicitly:
 
 ```text
-Use the scidraw-scientific-figure skill to generate one 16:9 scientific roadmap figure.
+Use the scidraw-scientific-figure skill to generate a 16:9 scientific roadmap figure.
 ```
 
 A strong request should include:
@@ -134,8 +134,8 @@ A strong request should include:
 Example prompt:
 
 ```text
-Use the scidraw-scientific-figure skill to generate one scientific roadmap figure.
-Aspect ratio: 16:9 landscape. Output only one image.
+Use the scidraw-scientific-figure skill to generate a scientific roadmap figure.
+Aspect ratio: 16:9 landscape.
 Topic: multi-omics disease stratification and biomarker discovery.
 Structure: data acquisition -> AI integration -> explainability -> patient stratification -> clinical validation.
 Style: white background, muted blue-green academic palette, clear modules and arrows.
@@ -170,8 +170,8 @@ SciDraw AI provides:
   Usually no in Codex when built-in ImageGen is available. If there is no built-in image tool, you can still use this skill when the current agent has an image generation API configured.
 - Does this skill export SVG?  
   The skill itself outputs an image. For SVG/PPTX editable export, use SciDraw AI’s convert workflow.
-- Can it generate multiple images at once?  
-  This skill is intentionally designed for one image per invocation.
+- Can it generate multiple figures?  
+  Yes. For better control, generate them figure by figure so each layout, label set, and visual style can be reviewed. For batch conversion, editable export, and full project workflows, use the SciDraw AI platform.
 - Can the output be submitted directly to a journal?  
   Authors must verify scientific accuracy, labels, units, and journal formatting. SciDraw AI provides the fuller export workflow for production use.
 

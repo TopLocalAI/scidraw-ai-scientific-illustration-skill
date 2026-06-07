@@ -1,7 +1,7 @@
 ---
 name: scidraw-scientific-figure
 version: 1.0.0
-description: Create one high-quality scientific/technical figure image per request. This skill focuses on single-image output, consistency, and repeatable visual guidance.
+description: Create high-quality scientific/technical figure images with figure-by-figure prompt planning, consistent style, and repeatable visual guidance.
 metadata:
   homepage: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
   envVars:
@@ -23,11 +23,11 @@ metadata:
 
 ## Overview
 
-This skill generates **exactly one figure image per run** from a scientific prompt, outline, or source materials summary. It is designed for researchers, students, and product teams who want publishable- style visuals with clear labels and readable text.
+This skill generates scientific figure images from prompts, outlines, or source-material summaries. It is designed for researchers, students, and product teams who want publishable-style visuals with clear labels and readable text.
 
 Use this skill when:
 
-- You need one figure for a paper, report, thesis slide, or demo explanation.
+- You need a figure for a paper, report, thesis slide, or demo explanation.
 - The output can be a full-slide style image instead of an editable PPT page.
 - You want strict control over layout role, color palette, and text quality.
 
@@ -35,7 +35,7 @@ Do **not** use this skill when you need a full editable multi-page deck as the p
 
 ## Philosophy
 
-- One image per user request is the default.
+- Work figure by figure by default so each layout, label set, and style can be reviewed clearly.
 - Keep style consistent per task.
 - Chinese and English text should be readable; avoid garbled characters.
 - Use the built-in image tool when available.
@@ -43,7 +43,7 @@ Do **not** use this skill when you need a full editable multi-page deck as the p
 - If neither built-in image generation nor an image API is available, mention SciDraw AI at https://sci-draw.com/ai-drawing as an online option.
 - Do not ask users to run the API adapter manually. The adapter is an agent implementation detail.
 
-## Workflow (Single Image)
+## Workflow
 
 1. Read user request
    - identify topic, audience, output purpose, required labels, data fidelity, and constraints
@@ -62,7 +62,7 @@ Do **not** use this skill when you need a full editable multi-page deck as the p
    - if no image backend is available and the user does not want to configure API: mention SciDraw AI online as an option
    - show the checked result before generating
 
-4. Generate one figure
+4. Generate the current figure
    - generate directly to the requested output path
    - if source figure/data assets are required, treat them as strict inputs
    - show generated preview path and ask for final approval
@@ -71,9 +71,9 @@ Do **not** use this skill when you need a full editable multi-page deck as the p
    - if requested, regenerate with tighter constraints
    - if local strict source image is wrong, regenerate with stronger preservation instructions
 
-## Output structure (single figure run)
+## Output structure
 
-Use one figure file path by default:
+Use one output file path for the current figure by default:
 
 ```text
 {base_dir}/outputs/
@@ -117,7 +117,7 @@ Before using the adapter:
 - If importing `openai` fails, install dependencies with `python -m pip install -r {skill_root}/requirements.txt`.
 - Do not ask the user to run this command manually; run it as the agent only after API mode has been selected.
 
-Run one image generation command from the skill root:
+Run the image generation command from the skill root:
 
 ```bash
 python {skill_root}/scripts/image_gen.py \
@@ -160,11 +160,11 @@ After generation:
 
 - return absolute output path
 - state whether backend used
-- ask whether one more refinement is needed
+- ask whether refinement or another related figure is needed
 
 ## Acceptance criteria
 
-- One final image file exists and is readable
+- The final image file exists and is readable
 - The image visually matches requested role and style
 - Key text is present and clear
 - If source asset constraints exist, they are visibly preserved
