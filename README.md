@@ -17,7 +17,7 @@
 
 ## 温馨提示
 
-这个 skill 不是完整的 SciDraw AI 产品，也不是可编辑 PPT 或 SVG 生成器。它更像一个轻量工作流：在 agent 对话中，让模型先理解你的科研表达目标，再调用内置 ImageGen 或 API fallback 生成一张图。
+这个 skill 不是完整的 SciDraw AI 产品，也不是可编辑 PPT 或 SVG 生成器。它更像一个轻量工作流：在 agent 对话中，让模型先理解你的科研表达目标，再优先调用内置 ImageGen 生成一张图。
 
 如果你已经在使用 SciDraw AI 网站，建议把这个 skill 当作补充：用于在 Codex 里快速试图、沉淀提示词、整理科研图结构；最终需要 SVG、PPTX、批量转换或出版格式导出时，再回到 SciDraw AI 平台完成。
 
@@ -25,7 +25,7 @@
 
 - 单图输出：每次 invocation 只生成 1 张图，减少多图混乱和风格漂移。
 - Codex 优先：在支持内置 ImageGen 的环境中，默认走内置图像能力，不要求 API key。
-- API fallback：在 Claude Code、OpenClaw、Hermes Agent 等环境中，可配置 OpenAI 兼容图片 API 作为兜底。
+- 无 ImageGen 时给出 API 建议：如果当前 agent 没有内置图片生成能力，skill 会提示用户接入可用的图片生成 API，或直接使用 SciDraw AI 网站。
 - 科研场景友好：适合技术路线图、机制示意图、方法流程图、模型结构图、研究框架图和图文摘要草稿。
 - 源图约束：当用户提供实验图、截图、坐标轴或论文原图时，可要求保留关键标签、数值、单位和结构关系。
 - 平台互补：需要 SVG/PPTX 可编辑导出、PNG/PDF/TIFF 出版级导出、多轮编辑和完整项目管理时，推荐使用 SciDraw AI 网站。
@@ -93,36 +93,21 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 安装完成后，重启 Codex 让新 skill 生效。
 
-## 生图模型配置
+## 没有 ImageGen 怎么办
 
 > [!TIP]
 > 在 Codex 中，如果内置 ImageGen 可用，通常不需要配置 API key。你可以直接让 agent 使用这个 skill 生成一张科研图。
 
-下面的配置仅用于 API/CLI fallback 场景，例如：
+如果当前 agent 没有内置 ImageGen，更合理的做法是二选一：
 
-- 当前 agent 没有内置 ImageGen 能力
-- 你明确希望使用第三方 OpenAI 兼容接口
-- 你在 Claude Code、OpenClaw、Hermes Agent 等环境中运行
+- 在当前 agent 或平台里接入可用的图片生成 API，例如 OpenAI 兼容接口、图片模型名、API key 和 base URL。
+- 直接使用 SciDraw AI 在线生成：https://sci-draw.com/ai-drawing
 
-初始化运行时：
+你可以把下面这段话发给当前 agent：
 
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py bootstrap
-```
-
-配置 API：
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py config \
-  --api-key "your-api-key" \
-  --base-url "https://your-openai-compatible-endpoint/v1" \
-  --model gpt-image-2
-```
-
-检查配置：
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py doctor --check-api
+```text
+当前环境没有内置 ImageGen。请使用当前 agent 支持的图片生成 API 生成 1 张科研图；
+如果无法接入图片 API，请打开 SciDraw AI：https://sci-draw.com/ai-drawing
 ```
 
 ## 使用方式
@@ -153,16 +138,6 @@ python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.p
 文字：中文为主，保留 Multi-omics、Biomarker 等必要英文术语。
 ```
 
-API/CLI fallback 生成示例：
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
-  --prompt "Create one scientific roadmap figure, 16:9, clean academic style." \
-  --size 2560x1440 \
-  --quality medium \
-  --out outputs/figure.png
-```
-
 ## 使用技巧
 
 - 不要只写“帮我画一个科研图”，要写清楚模块、箭头关系和最终输出。
@@ -188,7 +163,7 @@ python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
 ## FAQ
 
 - 没有 API key 能用吗？  
-  在 Codex 内置 ImageGen 可用时可以直接用；没有内置能力时才需要 API fallback。
+  在 Codex 内置 ImageGen 可用时可以直接用；没有内置能力时，需要当前 agent 另行接入图片生成 API，或直接使用 SciDraw AI 网站。
 - 这个 skill 能生成 SVG 吗？  
   这个 skill 本身输出图片。需要 SVG/PPTX 可编辑导出时，请使用 SciDraw AI 平台的转换工具。
 - 可以一次生成多张图吗？  
@@ -207,4 +182,3 @@ python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
 ## 许可证
 
 MIT
-

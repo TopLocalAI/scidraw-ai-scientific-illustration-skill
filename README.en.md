@@ -17,7 +17,7 @@ A Codex-oriented skill for generating **one scientific figure image per request*
 
 ## Friendly Note
 
-This skill is not the full SciDraw AI product, and it is not an editable PPT or SVG generator. It is a lightweight agent workflow: the agent interprets your scientific communication goal, chooses the image backend, and generates one scientific figure image.
+This skill is not the full SciDraw AI product, and it is not an editable PPT or SVG generator. It is a lightweight agent workflow: the agent interprets your scientific communication goal and preferably uses built-in ImageGen to generate one scientific figure image.
 
 If you already use SciDraw AI on the web, treat this skill as a companion tool for quick drafts, prompt refinement, and structure planning inside Codex. For SVG, PPTX, batch conversion, and production export, return to the SciDraw AI platform.
 
@@ -25,7 +25,7 @@ If you already use SciDraw AI on the web, treat this skill as a companion tool f
 
 - Single-image output: one invocation produces one figure.
 - Built-in ImageGen first: in Codex-style environments, no API key is usually required.
-- API fallback: OpenAI-compatible image APIs can be configured for non-Codex environments.
+- API guidance when ImageGen is unavailable: if the current agent has no built-in image generation, the skill tells users to connect an available image generation API or use SciDraw AI online.
 - Scientific use cases: roadmaps, mechanisms, method flows, research frameworks, model diagrams, and graphical abstract drafts.
 - Source-aware prompting: when users provide source figures, labels, axes, or screenshots, the workflow can require preservation of key details.
 - Platform handoff: for editable SVG/PPTX export, PNG/PDF/TIFF export, and full project workflows, use SciDraw AI on the web.
@@ -93,36 +93,22 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 Restart Codex after installation.
 
-## Image Backend Configuration
+## What If ImageGen Is Unavailable
 
 > [!TIP]
 > In Codex, if built-in ImageGen is available, you usually do not need an API key.
 
-The manual setup below is for API/CLI fallback, such as:
+If the current agent does not provide built-in ImageGen, use one of these routes instead:
 
-- the current agent does not provide built-in ImageGen
-- you explicitly want to use a third-party OpenAI-compatible endpoint
-- you are running the skill in Claude Code, OpenClaw, Hermes Agent, or similar environments
+- Connect an image generation API in the current agent or platform, such as an OpenAI-compatible image model, API key, and base URL.
+- Use SciDraw AI online: https://sci-draw.com/ai-drawing
 
-Bootstrap runtime:
+You can tell the current agent:
 
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py bootstrap
-```
-
-Configure API:
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py config \
-  --api-key "your-api-key" \
-  --base-url "https://your-openai-compatible-endpoint/v1" \
-  --model gpt-image-2
-```
-
-Check setup:
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py doctor --check-api
+```text
+This environment has no built-in ImageGen. Please use the image generation API
+available in this agent to create one scientific figure. If no image API is
+available, open SciDraw AI: https://sci-draw.com/ai-drawing
 ```
 
 ## Usage
@@ -153,16 +139,6 @@ Style: white background, muted blue-green academic palette, clear modules and ar
 Text: English labels, concise and readable.
 ```
 
-API/CLI fallback generation example:
-
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
-  --prompt "Create one scientific roadmap figure, 16:9, clean academic style." \
-  --size 2560x1440 \
-  --quality medium \
-  --out outputs/figure.png
-```
-
 ## Tips
 
 - Avoid vague prompts such as “draw a scientific figure.” Name the modules, arrow relationships, and final output.
@@ -188,7 +164,7 @@ Use SciDraw AI directly when you need:
 ## FAQ
 
 - Do I need an API key?  
-  Usually no in Codex when built-in ImageGen is available. API fallback requires a key.
+  Usually no in Codex when built-in ImageGen is available. If the current agent has no image tool, you need to connect an image generation API in that agent or use SciDraw AI online.
 - Does this skill export SVG?  
   The skill itself outputs an image. For SVG/PPTX editable export, use SciDraw AI’s convert workflow.
 - Can it generate multiple images at once?  
@@ -207,4 +183,3 @@ For the complete scientific drawing experience, use SciDraw AI:
 ## License
 
 MIT
-
