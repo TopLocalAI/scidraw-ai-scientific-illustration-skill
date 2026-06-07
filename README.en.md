@@ -1,45 +1,88 @@
 # SciDraw AI Scientific Illustration Skill
 
 [![中文](https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-red)](./README.md)
+[![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
-This is a **single-image** scientific illustration skill for Codex-style agents.
-
-Each request generates exactly one image.  
-This repo does not aim at full editable pipeline output, PPT assembly, or SVG editor workflows.
+A Codex-oriented skill for generating **one scientific figure image per request**. It can also be used in Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
 
 > [!TIP]
-> For full production workflows (batch generation, edit-ready flow, SVG export, and platform workflows), use SciDraw directly:
+> If you do not have an image generation API, or if you need the full SciDraw workflow, use SciDraw AI directly:
 >
-> - https://sci-draw.com/
-> - https://sci-draw.com/ai-scientific-illustration
-> - https://sci-draw.com/convert
+> - AI Drawing: https://sci-draw.com/ai-drawing
+> - SciDraw AI website: https://sci-draw.com/
+> - Convert tools for SVG/PPTX/PDF/TIFF workflows: https://sci-draw.com/convert
+>
+> The SciDraw AI platform supports AI Drawing, sketch-to-professional-figure workflows, image editing, editable SVG/PPTX export, and publication-ready PNG/PDF/TIFF export. This skill only covers single-image generation inside agent workflows.
 
-## Friendly note
+## Friendly Note
 
-This skill is optimized for “quick one-image delivery” in an agent workflow.
+This skill is not the full SciDraw AI product, and it is not an editable PPT or SVG generator. It is a lightweight agent workflow: the agent interprets your scientific communication goal, chooses the image backend, and generates one scientific figure image.
 
-- Priority: use Codex built-in image generation.
-- Optional fallback: `image_gen.py` CLI/API mode when built-in generation is unavailable.
-- If you frequently use the same output settings, you can lock your preferred prompt structure once and reuse it.
+If you already use SciDraw AI on the web, treat this skill as a companion tool for quick drafts, prompt refinement, and structure planning inside Codex. For SVG, PPTX, batch conversion, and production export, return to the SciDraw AI platform.
 
 ## Features
 
-- Single-image output per invocation.
-- Works for scientific roadmaps, mechanism diagrams, method flows, model architecture charts, and comparison visuals.
-- Supports source-anchored generation when strict preservation is required.
-- Simple and explicit workflow, suitable for iterative review inside chat.
+- Single-image output: one invocation produces one figure.
+- Built-in ImageGen first: in Codex-style environments, no API key is usually required.
+- API fallback: OpenAI-compatible image APIs can be configured for non-Codex environments.
+- Scientific use cases: roadmaps, mechanisms, method flows, research frameworks, model diagrams, and graphical abstract drafts.
+- Source-aware prompting: when users provide source figures, labels, axes, or screenshots, the workflow can require preservation of key details.
+- Platform handoff: for editable SVG/PPTX export, PNG/PDF/TIFF export, and full project workflows, use SciDraw AI on the web.
+
+## Output Examples
+
+The figure below was generated with Codex built-in ImageGen to verify the default image generation path for this skill.
+
+![ImageGen demo: SciDraw AI scientific workflow](assets/examples/imagegen-demo-scidraw-workflow.png)
+
+The examples below were downloaded from this project’s R2 assets and embedded into this repository.
+
+| Funding Roadmap | NSFC Technical Roadmap |
+| --- | --- |
+| ![Funding Roadmap](assets/examples/case-1-funding-roadmap.png) | ![NSFC Technical Roadmap](assets/examples/case-2-nsfc-roadmap.png) |
+| Research Logic Map | Digital Twin Workflow |
+| ![Research Logic Map](assets/examples/case-3-research-logic.png) | ![Digital Twin Workflow](assets/examples/case-4-digital-twin.png) |
+
+## Use Cases
+
+- Research proposal roadmaps and grant application figures
+- Paper graphical abstracts, TOC graphics, mechanism illustrations, and method diagrams
+- Thesis, defense, teaching, and lecture visuals
+- AI architecture, data pipeline, system workflow, and experiment design diagrams
+- Turning early scientific ideas into structured visual drafts
+
+## Output Structure
+
+By default, each run produces one image file:
+
+```text
+{output_dir}/
+└── figure_YYYYMMDD_HHMMSS.png
+```
+
+README example assets are stored in:
+
+```text
+assets/examples/
+├── imagegen-demo-scidraw-workflow.png
+├── case-1-funding-roadmap.png
+├── case-2-nsfc-roadmap.png
+├── case-3-research-logic.png
+└── case-4-digital-twin.png
+```
 
 ## Installation
 
-### One-sentence install (recommended)
+### One-sentence install
 
-Tell your agent:
+Send this sentence to your agent:
 
 ```text
-Please install this skill for me: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
+Please install this SciDraw AI scientific illustration skill: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
 ```
 
-### Manual install (Codex)
+### Manual install for Codex
 
 ```bash
 npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
@@ -48,111 +91,120 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
   --global
 ```
 
-Restart your agent afterwards.
+Restart Codex after installation.
 
-## API fallback configuration
+## Image Backend Configuration
 
-Only required when built-in image generation cannot be used.
+> [!TIP]
+> In Codex, if built-in ImageGen is available, you usually do not need an API key.
 
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py config \
-  --api-key "YOUR_API_KEY" \
-  --base-url "https://api.openai.com/v1" \
-  --model gpt-image-2
-```
+The manual setup below is for API/CLI fallback, such as:
 
-Health check:
+- the current agent does not provide built-in ImageGen
+- you explicitly want to use a third-party OpenAI-compatible endpoint
+- you are running the skill in Claude Code, OpenClaw, Hermes Agent, or similar environments
 
-```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py doctor --check-api
-```
-
-## How to use
-
-1. Define purpose (roadmap/flow/mechanism/architecture).
-2. Specify aspect ratio (`16:9`, `4:3`, `1:1`).
-3. Define language and label density.
-4. Define structure and logic chain (question → method → result → validation).
-5. Tell if source labels/axes/units must be strictly preserved.
-6. Confirm single-image output.
-
-Example:
-
-```text
-Generate one scientific figure in 16:9.
-Use Chinese labels and keep layout logic clear.
-Topic: ...
-Flow: Problem -> Method -> Data -> Validation.
-Keep key labels and numeric units unchanged.
-Output only one image.
-```
-
-## Fallback CLI usage (optional)
+Bootstrap runtime:
 
 ```bash
 python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py bootstrap
 ```
 
+Configure API:
+
 ```bash
-python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
-  --prompt "Generate one scientific mechanism diagram, 16:9, academic style." \
-  --size 2560x1440 \
-  --quality medium \
-  --out scidraw-ai-scientific-illustration-skill/outputs/figure.png
+python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py config \
+  --api-key "your-api-key" \
+  --base-url "https://your-openai-compatible-endpoint/v1" \
+  --model gpt-image-2
 ```
 
-`image_gen.py` options:
+Check setup:
 
-- `--prompt-file /path/to/prompt.txt`
-- `--prompt-file -` (stdin)
-- `--dry-run`
-- `--json`
+```bash
+python3 scidraw-ai-scientific-illustration-skill/scripts/codex_scidraw_runtime.py doctor --check-api
+```
 
-## Case Gallery (downloaded from this repo R2 assets)
+## Usage
 
-### 1. Funding Roadmap
+Ask Codex, Claude Code, OpenClaw, or Hermes Agent to use this skill explicitly:
 
-![Funding Roadmap](assets/examples/case-1-funding-roadmap.png)
+```text
+Use the scidraw-scientific-figure skill to generate one 16:9 scientific roadmap figure.
+```
 
-### 2. NSFC Technical Roadmap
+A strong request should include:
 
-![NSFC Technical Roadmap](assets/examples/case-2-nsfc-roadmap.png)
+1. Purpose: paper figure, grant figure, thesis figure, teaching figure, model diagram
+2. Aspect ratio: 16:9, 4:3, 1:1, or journal-specific dimensions
+3. Logic structure: question, method, data, validation, output
+4. Text language: English, Chinese, or mixed terminology
+5. Visual style: white background, academic palette, low saturation, clear arrows, modular layout
+6. Preservation constraints: labels, axes, legends, units, logos, or source figure content that must remain unchanged
 
-### 3. Research Logic Map
+Example prompt:
 
-![Research Logic Map](assets/examples/case-3-research-logic.png)
+```text
+Use the scidraw-scientific-figure skill to generate one scientific roadmap figure.
+Aspect ratio: 16:9 landscape. Output only one image.
+Topic: multi-omics disease stratification and biomarker discovery.
+Structure: data acquisition -> AI integration -> explainability -> patient stratification -> clinical validation.
+Style: white background, muted blue-green academic palette, clear modules and arrows.
+Text: English labels, concise and readable.
+```
 
-### 4. Digital Twin Workflow
+API/CLI fallback generation example:
 
-![Digital Twin Workflow](assets/examples/case-4-digital-twin.png)
+```bash
+python3 scidraw-ai-scientific-illustration-skill/scripts/image_gen.py \
+  --prompt "Create one scientific roadmap figure, 16:9, clean academic style." \
+  --size 2560x1440 \
+  --quality medium \
+  --out outputs/figure.png
+```
+
+## Tips
+
+- Avoid vague prompts such as “draw a scientific figure.” Name the modules, arrow relationships, and final output.
+- Keep labels concise, especially for Chinese figures.
+- For grant figures, describe the scientific question, research tasks, technical route, and validation loop.
+- For graphical abstracts, describe the main finding, mechanism, method, and application context.
+- If labels, axes, units, or experimental figures must be preserved, say so explicitly.
+
+## Relationship to SciDraw AI
+
+This skill is a lightweight agent entry point for the SciDraw AI workflow. The SciDraw AI web platform is the complete product.
+
+Use SciDraw AI directly when you need:
+
+- AI Drawing online: https://sci-draw.com/ai-drawing
+- sketch-to-professional scientific figure workflows
+- image upload and follow-up editing
+- raster image to editable SVG conversion
+- image to PPTX with editable text layers
+- PNG, PDF, and TIFF publication export
+- complete workflows for papers, grants, posters, and teaching materials
 
 ## FAQ
 
-- Does this skill export SVG or editable PPT?  
-  No. For SVG/editable flows, use SciDraw’s web platform.
 - Do I need an API key?  
-  Usually no, when built-in image generation is available.
-- Can I generate multiple images at once?  
-  No. This skill is intentionally single-output.
-- Is source input preserved?  
-  It can be preserved when the prompt explicitly requires strict retention.
+  Usually no in Codex when built-in ImageGen is available. API fallback requires a key.
+- Does this skill export SVG?  
+  The skill itself outputs an image. For SVG/PPTX editable export, use SciDraw AI’s convert workflow.
+- Can it generate multiple images at once?  
+  This skill is intentionally designed for one image per invocation.
+- Can the output be submitted directly to a journal?  
+  Authors must verify scientific accuracy, labels, units, and journal formatting. SciDraw AI provides the fuller export workflow for production use.
 
-## Structure
+## More SciDraw AI
 
-```text
-scidraw-ai-scientific-illustration-skill/
-├── SKILL.md
-├── README.md
-├── README.en.md
-├── requirements.txt
-├── assets/
-│   └── examples/
-│       ├── case-1-funding-roadmap.png
-│       ├── case-2-nsfc-roadmap.png
-│       ├── case-3-research-logic.png
-│       └── case-4-digital-twin.png
-└── scripts/
-    ├── codex_scidraw_runtime.py
-    └── image_gen.py
-```
+For the complete scientific drawing experience, use SciDraw AI:
+
+- AI Drawing: https://sci-draw.com/ai-drawing
+- Website: https://sci-draw.com/
+- Convert tools: https://sci-draw.com/convert
+
+## License
+
+MIT
 
