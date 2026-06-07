@@ -21,7 +21,7 @@ metadata:
       - name: SCIDRAW_FIGURE_HOME
         required: false
         description: Optional runtime home override, default is ~/.scidraw-figure-skill.
-  homepage: https://github.com/<your-org>/scidraw-ai-scientific-illustration-skill
+  homepage: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
 ---
 
 # SciDraw Scientific Figure Skill
