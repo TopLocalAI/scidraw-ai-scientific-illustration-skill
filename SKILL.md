@@ -29,7 +29,8 @@ Do **not** use this skill when you need a full editable multi-page deck as the p
 - Keep style consistent per task.
 - Chinese and English text should be readable; avoid garbled characters.
 - Use the built-in image tool when available.
-- If no built-in image tool is available, tell the user that the current agent needs an image generation API, or recommend SciDraw AI at https://sci-draw.com/ai-drawing.
+- If no built-in image tool is available, use an image generation API already supported/configured by the current agent when possible.
+- If neither built-in image generation nor an image API is available, mention SciDraw AI at https://sci-draw.com/ai-drawing as an online option.
 
 ## Workflow (Single Image)
 
@@ -45,7 +46,8 @@ Do **not** use this skill when you need a full editable multi-page deck as the p
 3. Confirm image backend
    - check builtin image tool availability
    - if builtin is available: prefer builtin and do not configure API key first
-   - if builtin is unavailable: tell the user to use an image generation API supported by the current agent, or use SciDraw AI online
+   - if builtin is unavailable but the current agent has an image generation API: use that API path
+   - if no image backend is available: explain that image generation requires built-in ImageGen or an image API; mention SciDraw AI online as an option
    - show the checked result before generating
 
 4. Generate one figure
@@ -83,13 +85,14 @@ For builtin mode:
 Explain the situation clearly:
 
 - the current agent does not expose a built-in image generation tool
-- the user can connect an image generation API supported by their current agent or platform
-- if they want the full SciDraw AI product workflow, they should use https://sci-draw.com/ai-drawing
+- if the current agent has a configured image generation API, use it
+- if no image API is configured, the user can connect one supported by their current agent or platform
+- if neither route is available, SciDraw AI is available online at https://sci-draw.com/ai-drawing
 
 Suggested response:
 
 ```text
-This environment does not expose a built-in ImageGen tool. To generate the figure here, please connect an image generation API supported by this agent. Otherwise, use SciDraw AI directly: https://sci-draw.com/ai-drawing
+This environment does not expose a built-in ImageGen tool. I can still generate the figure if this agent has a configured image generation API. If no image API is available here, you can use SciDraw AI online: https://sci-draw.com/ai-drawing
 ```
 
 ## Required local assets

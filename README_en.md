@@ -8,7 +8,8 @@
 A Codex-oriented skill for generating **one scientific figure image per request**. It can also be used in Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
 
 > [!TIP]
-> If you do not have an image generation API, or if you need the full SciDraw workflow, use [SciDraw AI](https://sci-draw.com/ai-drawing) directly:
+> This skill supports two generation routes: Codex built-in ImageGen, or an image generation API already configured in the current agent.  
+> If you have neither built-in ImageGen nor an available image API, you can use [SciDraw AI](https://sci-draw.com/ai-drawing) online:
 >
 > - [AI Drawing](https://sci-draw.com/ai-drawing)
 > - [SciDraw AI website](https://sci-draw.com/)
@@ -26,7 +27,8 @@ If you already use SciDraw AI on the web, treat this skill as a companion tool f
 
 - Single-image output: one invocation produces one figure.
 - Built-in ImageGen first: in Codex-style environments, no API key is usually required.
-- API guidance when ImageGen is unavailable: if the current agent has no built-in image generation, the skill tells users to connect an available image generation API or use SciDraw AI online.
+- Image API support: if the current agent supports an external image API, use the configured model, API key, and base URL.
+- Alternative when no backend is available: if there is neither ImageGen nor an image API, use SciDraw AI online.
 - Scientific use cases: roadmaps, mechanisms, method flows, research frameworks, model diagrams, and graphical abstract drafts.
 - Source-aware prompting: when users provide source figures, labels, axes, or screenshots, the workflow can require preservation of key details.
 - Platform handoff: for editable SVG/PPTX export, PNG/PDF/TIFF export, and full project workflows, use SciDraw AI on the web.
@@ -96,15 +98,19 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 Restart Codex after installation.
 
-## What If ImageGen Is Unavailable
+## ImageGen and API
 
 > [!TIP]
 > In Codex, if built-in ImageGen is available, you usually do not need an API key.
 
-If the current agent does not provide built-in ImageGen, use one of these routes instead:
+If the current agent does not provide built-in ImageGen but supports an image generation API, this skill can still be used. Configure the API details required by your agent or platform, such as:
 
-- Connect an image generation API in the current agent or platform, such as an OpenAI-compatible image model, API key, and base URL.
-- Use [SciDraw AI online](https://sci-draw.com/ai-drawing)
+- image model name
+- API key
+- base URL
+- any additional image generation parameters required by the current agent
+
+If the current environment has neither built-in ImageGen nor an available image API, use [SciDraw AI online](https://sci-draw.com/ai-drawing).
 
 ## Usage
 
@@ -146,7 +152,7 @@ Text: English labels, concise and readable.
 
 This skill is a lightweight agent entry point for the [SciDraw AI](https://sci-draw.com/ai-drawing) workflow. The SciDraw AI web platform is the complete product.
 
-Use SciDraw AI directly when you need:
+SciDraw AI provides:
 
 - [AI Drawing online](https://sci-draw.com/ai-drawing)
 - sketch-to-professional scientific figure workflows
@@ -159,7 +165,7 @@ Use SciDraw AI directly when you need:
 ## FAQ
 
 - Do I need an API key?  
-  Usually no in Codex when built-in ImageGen is available. If the current agent has no image tool, you need to connect an image generation API in that agent or use SciDraw AI online.
+  Usually no in Codex when built-in ImageGen is available. If there is no built-in image tool, you can still use this skill when the current agent has an image generation API configured.
 - Does this skill export SVG?  
   The skill itself outputs an image. For SVG/PPTX editable export, use SciDraw AI’s convert workflow.
 - Can it generate multiple images at once?  
@@ -169,7 +175,7 @@ Use SciDraw AI directly when you need:
 
 ## More SciDraw AI
 
-For the complete scientific drawing experience, use [SciDraw AI](https://sci-draw.com/ai-drawing):
+The complete scientific drawing workflow is available in [SciDraw AI](https://sci-draw.com/ai-drawing):
 
 - [AI Drawing](https://sci-draw.com/ai-drawing)
 - [Website](https://sci-draw.com/)
