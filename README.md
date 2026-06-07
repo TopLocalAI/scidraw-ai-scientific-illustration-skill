@@ -1,17 +1,18 @@
 # SciDraw AI 科研画图 Skill
 
 [![English](https://img.shields.io/badge/docs-English-blue)](./README_en.md)
+[![SciDraw AI](https://img.shields.io/badge/SciDraw%20AI-AI%20Drawing-0f766e)](https://sci-draw.com/ai-drawing)
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
 一个面向 Codex 的科研画图 skill，也可在 Claude Code、OpenClaw、Hermes Agent 等支持 `SKILL.md` 的 agent 中使用。它的目标非常明确：把研究想法、论文方法、基金路线、实验流程或模型结构转换成**一张高质量科研图像**。
 
 > [!TIP]
-> 如果你没有图像生成 API，或者需要完整产品能力，建议直接使用 SciDraw AI：
+> 如果你没有图像生成 API，或者需要完整产品能力，建议直接使用 [SciDraw AI](https://sci-draw.com/ai-drawing)：
 >
-> - AI Drawing 主入口：https://sci-draw.com/ai-drawing
-> - SciDraw AI 官网：https://sci-draw.com/
-> - 图片转 SVG/PPTX/PDF/TIFF 等转换工具：https://sci-draw.com/convert
+> - [AI Drawing 主入口](https://sci-draw.com/ai-drawing)
+> - [SciDraw AI 官网](https://sci-draw.com/)
+> - [图片转 SVG/PPTX/PDF/TIFF 等转换工具](https://sci-draw.com/convert)
 >
 > SciDraw AI 平台支持 AI Drawing、草图转专业图、图片编辑、SVG/PPTX 可编辑导出、PNG/PDF/TIFF 出版级导出等能力；本 skill 只覆盖 agent 里的“单图生成”流程。
 
@@ -34,19 +35,17 @@
 
 ### 从研究想法到科研图
 
-![SciDraw AI 科研图工作流](assets/examples/imagegen-demo-scidraw-workflow.png)
+[![SciDraw AI 科研图工作流](assets/examples/imagegen-demo-scidraw-workflow.png)](https://sci-draw.com/ai-drawing)
 
 ### 科研图示例
 
 | 英文标签工作流 | 英文标签生物标志物路线图 |
 | --- | --- |
-| ![English sketch to export workflow](assets/examples/english-sketch-to-export.png) | ![English biomarker workflow](assets/examples/english-biomarker-workflow.png) |
+| [![English sketch to export workflow](assets/examples/english-sketch-to-export.png)](https://sci-draw.com/ai-drawing) | [![English biomarker workflow](assets/examples/english-biomarker-workflow.png)](https://sci-draw.com/ai-drawing) |
 
-| 基金驱动实施路径图 | 国自然技术路线图 |
+| 水凝胶药物递送机制图 | 土壤碳监测工作流 |
 | --- | --- |
-| ![基金驱动实施路径图](assets/examples/case-1-funding-roadmap.png) | ![国自然技术路线图](assets/examples/case-2-nsfc-roadmap.png) |
-| 研究逻辑关系图 | 数字孪生基金插图 |
-| ![研究逻辑关系图](assets/examples/case-3-research-logic.png) | ![数字孪生基金插图](assets/examples/case-4-digital-twin.png) |
+| [![Hydrogel drug delivery mechanism](assets/examples/english-hydrogel-delivery.png)](https://sci-draw.com/ai-drawing) | [![Soil carbon monitoring workflow](assets/examples/english-soil-carbon-monitoring.png)](https://sci-draw.com/ai-drawing) |
 
 ## 适用场景
 
@@ -72,10 +71,8 @@ assets/examples/
 ├── imagegen-demo-scidraw-workflow.png
 ├── english-sketch-to-export.png
 ├── english-biomarker-workflow.png
-├── case-1-funding-roadmap.png
-├── case-2-nsfc-roadmap.png
-├── case-3-research-logic.png
-└── case-4-digital-twin.png
+├── english-hydrogel-delivery.png
+└── english-soil-carbon-monitoring.png
 ```
 
 ## 安装
@@ -107,7 +104,7 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 如果当前 agent 没有内置 ImageGen，更合理的做法是二选一：
 
 - 在当前 agent 或平台里接入可用的图片生成 API，例如 OpenAI 兼容接口、图片模型名、API key 和 base URL。
-- 直接使用 SciDraw AI 在线生成：https://sci-draw.com/ai-drawing
+- 直接使用 [SciDraw AI 在线生成](https://sci-draw.com/ai-drawing)
 
 ## 使用方式
 
@@ -147,11 +144,11 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 ## 与 SciDraw AI 平台的关系
 
-本 skill 是 SciDraw AI 工作流在 agent 生态中的轻量入口；SciDraw AI 平台是完整产品。
+本 skill 是 [SciDraw AI](https://sci-draw.com/ai-drawing) 工作流在 agent 生态中的轻量入口；SciDraw AI 平台是完整产品。
 
 如果你需要这些能力，请直接使用 SciDraw AI：
 
-- AI Drawing 在线生成：https://sci-draw.com/ai-drawing
+- [AI Drawing 在线生成](https://sci-draw.com/ai-drawing)
 - 草图转专业科研图
 - 上传图片后继续编辑
 - 图片转可编辑 SVG
@@ -172,11 +169,11 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 ## 更多 SciDraw AI
 
-如果你希望获得完整的科研画图体验，而不是只在 agent 中生成单张图片，请使用 SciDraw AI：
+如果你希望获得完整的科研画图体验，而不是只在 agent 中生成单张图片，请使用 [SciDraw AI](https://sci-draw.com/ai-drawing)：
 
-- AI Drawing：https://sci-draw.com/ai-drawing
-- 官网：https://sci-draw.com/
-- 转换工具：https://sci-draw.com/convert
+- [AI Drawing](https://sci-draw.com/ai-drawing)
+- [官网](https://sci-draw.com/)
+- [转换工具](https://sci-draw.com/convert)
 
 ## 许可证
 

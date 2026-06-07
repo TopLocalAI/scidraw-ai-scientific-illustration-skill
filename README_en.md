@@ -1,17 +1,18 @@
 # SciDraw AI Scientific Illustration Skill
 
 [![中文](https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-red)](./README.md)
+[![SciDraw AI](https://img.shields.io/badge/SciDraw%20AI-AI%20Drawing-0f766e)](https://sci-draw.com/ai-drawing)
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
 A Codex-oriented skill for generating **one scientific figure image per request**. It can also be used in Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
 
 > [!TIP]
-> If you do not have an image generation API, or if you need the full SciDraw workflow, use SciDraw AI directly:
+> If you do not have an image generation API, or if you need the full SciDraw workflow, use [SciDraw AI](https://sci-draw.com/ai-drawing) directly:
 >
-> - AI Drawing: https://sci-draw.com/ai-drawing
-> - SciDraw AI website: https://sci-draw.com/
-> - Convert tools for SVG/PPTX/PDF/TIFF workflows: https://sci-draw.com/convert
+> - [AI Drawing](https://sci-draw.com/ai-drawing)
+> - [SciDraw AI website](https://sci-draw.com/)
+> - [Convert tools for SVG/PPTX/PDF/TIFF workflows](https://sci-draw.com/convert)
 >
 > The SciDraw AI platform supports AI Drawing, sketch-to-professional-figure workflows, image editing, editable SVG/PPTX export, and publication-ready PNG/PDF/TIFF export. This skill only covers single-image generation inside agent workflows.
 
@@ -34,19 +35,17 @@ If you already use SciDraw AI on the web, treat this skill as a companion tool f
 
 ### From Research Idea to Scientific Figure
 
-![SciDraw AI scientific workflow](assets/examples/imagegen-demo-scidraw-workflow.png)
+[![SciDraw AI scientific workflow](assets/examples/imagegen-demo-scidraw-workflow.png)](https://sci-draw.com/ai-drawing)
 
 ### Scientific Figure Examples
 
 | Sketch to Export Workflow | Biomarker Discovery Roadmap |
 | --- | --- |
-| ![Sketch to export workflow](assets/examples/english-sketch-to-export.png) | ![Biomarker discovery workflow](assets/examples/english-biomarker-workflow.png) |
+| [![Sketch to export workflow](assets/examples/english-sketch-to-export.png)](https://sci-draw.com/ai-drawing) | [![Biomarker discovery workflow](assets/examples/english-biomarker-workflow.png)](https://sci-draw.com/ai-drawing) |
 
-| Funding Roadmap | NSFC Technical Roadmap |
+| Hydrogel Drug Delivery | Soil Carbon Monitoring |
 | --- | --- |
-| ![Funding Roadmap](assets/examples/case-1-funding-roadmap.png) | ![NSFC Technical Roadmap](assets/examples/case-2-nsfc-roadmap.png) |
-| Research Logic Map | Digital Twin Workflow |
-| ![Research Logic Map](assets/examples/case-3-research-logic.png) | ![Digital Twin Workflow](assets/examples/case-4-digital-twin.png) |
+| [![Hydrogel drug delivery mechanism](assets/examples/english-hydrogel-delivery.png)](https://sci-draw.com/ai-drawing) | [![Soil carbon monitoring workflow](assets/examples/english-soil-carbon-monitoring.png)](https://sci-draw.com/ai-drawing) |
 
 ## Use Cases
 
@@ -72,10 +71,8 @@ assets/examples/
 ├── imagegen-demo-scidraw-workflow.png
 ├── english-sketch-to-export.png
 ├── english-biomarker-workflow.png
-├── case-1-funding-roadmap.png
-├── case-2-nsfc-roadmap.png
-├── case-3-research-logic.png
-└── case-4-digital-twin.png
+├── english-hydrogel-delivery.png
+└── english-soil-carbon-monitoring.png
 ```
 
 ## Installation
@@ -107,7 +104,7 @@ Restart Codex after installation.
 If the current agent does not provide built-in ImageGen, use one of these routes instead:
 
 - Connect an image generation API in the current agent or platform, such as an OpenAI-compatible image model, API key, and base URL.
-- Use SciDraw AI online: https://sci-draw.com/ai-drawing
+- Use [SciDraw AI online](https://sci-draw.com/ai-drawing)
 
 ## Usage
 
@@ -147,11 +144,11 @@ Text: English labels, concise and readable.
 
 ## Relationship to SciDraw AI
 
-This skill is a lightweight agent entry point for the SciDraw AI workflow. The SciDraw AI web platform is the complete product.
+This skill is a lightweight agent entry point for the [SciDraw AI](https://sci-draw.com/ai-drawing) workflow. The SciDraw AI web platform is the complete product.
 
 Use SciDraw AI directly when you need:
 
-- AI Drawing online: https://sci-draw.com/ai-drawing
+- [AI Drawing online](https://sci-draw.com/ai-drawing)
 - sketch-to-professional scientific figure workflows
 - image upload and follow-up editing
 - raster image to editable SVG conversion
@@ -172,11 +169,11 @@ Use SciDraw AI directly when you need:
 
 ## More SciDraw AI
 
-For the complete scientific drawing experience, use SciDraw AI:
+For the complete scientific drawing experience, use [SciDraw AI](https://sci-draw.com/ai-drawing):
 
-- AI Drawing: https://sci-draw.com/ai-drawing
-- Website: https://sci-draw.com/
-- Convert tools: https://sci-draw.com/convert
+- [AI Drawing](https://sci-draw.com/ai-drawing)
+- [Website](https://sci-draw.com/)
+- [Convert tools](https://sci-draw.com/convert)
 
 ## License
 
