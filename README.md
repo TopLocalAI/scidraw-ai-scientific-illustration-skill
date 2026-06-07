@@ -1,6 +1,6 @@
 # SciDraw AI 科研画图 Skill
 
-[![English](https://img.shields.io/badge/docs-English-blue)](./README.en.md)
+[![English](https://img.shields.io/badge/docs-English-blue)](./README_en.md)
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
@@ -32,11 +32,11 @@
 
 ## 生成效果
 
-下面这张图是使用 Codex 内置 ImageGen 试运行生成的科研工作流示意图，用于验证本 skill 的默认内置生图路径。
+### 从研究想法到科研图
 
-![ImageGen 试运行：SciDraw AI 科研图工作流](assets/examples/imagegen-demo-scidraw-workflow.png)
+![SciDraw AI 科研图工作流](assets/examples/imagegen-demo-scidraw-workflow.png)
 
-下面是从当前项目 R2 资源下载到本仓库的 SciDraw AI 科研图示例。
+### 科研图示例
 
 | 基金驱动实施路径图 | 国自然技术路线图 |
 | --- | --- |

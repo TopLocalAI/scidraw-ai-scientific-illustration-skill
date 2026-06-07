@@ -30,13 +30,13 @@ If you already use SciDraw AI on the web, treat this skill as a companion tool f
 - Source-aware prompting: when users provide source figures, labels, axes, or screenshots, the workflow can require preservation of key details.
 - Platform handoff: for editable SVG/PPTX export, PNG/PDF/TIFF export, and full project workflows, use SciDraw AI on the web.
 
-## Output Examples
+## Examples
 
-The figure below was generated with Codex built-in ImageGen to verify the default image generation path for this skill.
+### From Research Idea to Scientific Figure
 
-![ImageGen demo: SciDraw AI scientific workflow](assets/examples/imagegen-demo-scidraw-workflow.png)
+![SciDraw AI scientific workflow](assets/examples/imagegen-demo-scidraw-workflow.png)
 
-The examples below were downloaded from this project’s R2 assets and embedded into this repository.
+### Scientific Figure Examples
 
 | Funding Roadmap | NSFC Technical Roadmap |
 | --- | --- |
