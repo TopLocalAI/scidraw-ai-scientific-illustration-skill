@@ -38,6 +38,10 @@
 
 ### 科研图示例
 
+| 英文标签工作流 | 英文标签生物标志物路线图 |
+| --- | --- |
+| ![English sketch to export workflow](assets/examples/english-sketch-to-export.png) | ![English biomarker workflow](assets/examples/english-biomarker-workflow.png) |
+
 | 基金驱动实施路径图 | 国自然技术路线图 |
 | --- | --- |
 | ![基金驱动实施路径图](assets/examples/case-1-funding-roadmap.png) | ![国自然技术路线图](assets/examples/case-2-nsfc-roadmap.png) |
@@ -66,6 +70,8 @@
 ```text
 assets/examples/
 ├── imagegen-demo-scidraw-workflow.png
+├── english-sketch-to-export.png
+├── english-biomarker-workflow.png
 ├── case-1-funding-roadmap.png
 ├── case-2-nsfc-roadmap.png
 ├── case-3-research-logic.png
@@ -102,13 +108,6 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 - 在当前 agent 或平台里接入可用的图片生成 API，例如 OpenAI 兼容接口、图片模型名、API key 和 base URL。
 - 直接使用 SciDraw AI 在线生成：https://sci-draw.com/ai-drawing
-
-你可以把下面这段话发给当前 agent：
-
-```text
-当前环境没有内置 ImageGen。请使用当前 agent 支持的图片生成 API 生成 1 张科研图；
-如果无法接入图片 API，请打开 SciDraw AI：https://sci-draw.com/ai-drawing
-```
 
 ## 使用方式
 

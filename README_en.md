@@ -38,6 +38,10 @@ If you already use SciDraw AI on the web, treat this skill as a companion tool f
 
 ### Scientific Figure Examples
 
+| Sketch to Export Workflow | Biomarker Discovery Roadmap |
+| --- | --- |
+| ![Sketch to export workflow](assets/examples/english-sketch-to-export.png) | ![Biomarker discovery workflow](assets/examples/english-biomarker-workflow.png) |
+
 | Funding Roadmap | NSFC Technical Roadmap |
 | --- | --- |
 | ![Funding Roadmap](assets/examples/case-1-funding-roadmap.png) | ![NSFC Technical Roadmap](assets/examples/case-2-nsfc-roadmap.png) |
@@ -66,6 +70,8 @@ README example assets are stored in:
 ```text
 assets/examples/
 ├── imagegen-demo-scidraw-workflow.png
+├── english-sketch-to-export.png
+├── english-biomarker-workflow.png
 ├── case-1-funding-roadmap.png
 ├── case-2-nsfc-roadmap.png
 ├── case-3-research-logic.png
@@ -102,14 +108,6 @@ If the current agent does not provide built-in ImageGen, use one of these routes
 
 - Connect an image generation API in the current agent or platform, such as an OpenAI-compatible image model, API key, and base URL.
 - Use SciDraw AI online: https://sci-draw.com/ai-drawing
-
-You can tell the current agent:
-
-```text
-This environment has no built-in ImageGen. Please use the image generation API
-available in this agent to create one scientific figure. If no image API is
-available, open SciDraw AI: https://sci-draw.com/ai-drawing
-```
 
 ## Usage
 
