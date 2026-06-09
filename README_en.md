@@ -91,7 +91,7 @@ Please install this SciDraw AI scientific illustration skill: https://github.com
 
 ```bash
 npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  --skill scidraw-scientific-figure \
+  --skill scidraw-ai-scientific-figure \
   --agent codex \
   --global
 ```
@@ -100,7 +100,7 @@ You can also install it with GitHub CLI Agent Skills:
 
 ```bash
 gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  scidraw-scientific-figure \
+  scidraw-ai-scientific-figure \
   --agent codex \
   --scope user
 ```
@@ -119,7 +119,7 @@ If the current agent does not provide built-in ImageGen but you have an image ge
 - base URL
 - any additional image generation parameters required by the current agent
 
-The concrete API adapter instructions live in `skills/scidraw-scientific-figure/SKILL.md` and are meant for the agent to read and execute when needed. Ordinary users do not need to run the script manually.
+The concrete API adapter instructions live in `skills/scidraw-ai-scientific-figure/SKILL.md` and are meant for the agent to read and execute when needed. Ordinary users do not need to run the script manually.
 
 If the current environment has neither built-in ImageGen nor an available image API, use [SciDraw AI online](https://sci-draw.com/ai-drawing).
 
@@ -128,7 +128,7 @@ If the current environment has neither built-in ImageGen nor an available image 
 Ask Codex, Claude Code, OpenClaw, or Hermes Agent to use this skill explicitly:
 
 ```text
-Use the scidraw-scientific-figure skill to generate a 16:9 scientific roadmap figure.
+Use the scidraw-ai-scientific-figure skill to generate a 16:9 scientific roadmap figure.
 ```
 
 A strong request should include:
@@ -143,7 +143,7 @@ A strong request should include:
 Example prompt:
 
 ```text
-Use the scidraw-scientific-figure skill to generate a scientific roadmap figure.
+Use the scidraw-ai-scientific-figure skill to generate a scientific roadmap figure.
 Aspect ratio: 16:9 landscape.
 Topic: multi-omics disease stratification and biomarker discovery.
 Structure: data acquisition -> AI integration -> explainability -> patient stratification -> clinical validation.

@@ -91,7 +91,7 @@ assets/examples/
 
 ```bash
 npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  --skill scidraw-scientific-figure \
+  --skill scidraw-ai-scientific-figure \
   --agent codex \
   --global
 ```
@@ -100,7 +100,7 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 ```bash
 gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  scidraw-scientific-figure \
+  scidraw-ai-scientific-figure \
   --agent codex \
   --scope user
 ```
@@ -119,7 +119,7 @@ gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
 - base URL
 - 当前 agent 所要求的其他图片生成参数
 
-具体的 API adapter 调用方式写在 `skills/scidraw-scientific-figure/SKILL.md` 中，由 agent 在需要时读取并执行；普通用户不需要手动运行脚本。
+具体的 API adapter 调用方式写在 `skills/scidraw-ai-scientific-figure/SKILL.md` 中，由 agent 在需要时读取并执行；普通用户不需要手动运行脚本。
 
 如果当前环境既没有内置 ImageGen，也没有可用的图片 API，可以使用 [SciDraw AI 在线生成](https://sci-draw.com/ai-drawing)。
 
@@ -128,7 +128,7 @@ gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
 在 Codex、Claude Code、OpenClaw 或 Hermes Agent 中明确指定使用本 skill，例如：
 
 ```text
-请使用 scidraw-scientific-figure skill 生成 16:9 的国自然技术路线图。
+请使用 scidraw-ai-scientific-figure skill 生成 16:9 的国自然技术路线图。
 ```
 
 建议你的提示词包含这些信息：
@@ -143,7 +143,7 @@ gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
 示例提示词：
 
 ```text
-请使用 scidraw-scientific-figure skill 生成科研技术路线图。
+请使用 scidraw-ai-scientific-figure skill 生成科研技术路线图。
 比例：16:9 横版。
 主题：基于多组学数据的疾病分型与生物标志物发现。
 结构：数据采集 -> AI 融合建模 -> 可解释性分析 -> 患者分层 -> 临床验证。
