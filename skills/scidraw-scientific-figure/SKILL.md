@@ -2,6 +2,7 @@
 name: scidraw-scientific-figure
 version: 1.0.0
 description: Create high-quality scientific/technical figure images with figure-by-figure prompt planning, consistent style, and repeatable visual guidance.
+license: MIT
 metadata:
   homepage: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
   envVars:

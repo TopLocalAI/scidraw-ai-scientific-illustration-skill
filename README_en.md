@@ -96,6 +96,15 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
   --global
 ```
 
+You can also install it with GitHub CLI Agent Skills:
+
+```bash
+gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
+  scidraw-scientific-figure \
+  --agent codex \
+  --scope user
+```
+
 Restart Codex after installation.
 
 ## ImageGen and API
@@ -110,7 +119,7 @@ If the current agent does not provide built-in ImageGen but you have an image ge
 - base URL
 - any additional image generation parameters required by the current agent
 
-The concrete API adapter instructions live in `SKILL.md` and are meant for the agent to read and execute when needed. Ordinary users do not need to run the script manually.
+The concrete API adapter instructions live in `skills/scidraw-scientific-figure/SKILL.md` and are meant for the agent to read and execute when needed. Ordinary users do not need to run the script manually.
 
 If the current environment has neither built-in ImageGen nor an available image API, use [SciDraw AI online](https://sci-draw.com/ai-drawing).
 

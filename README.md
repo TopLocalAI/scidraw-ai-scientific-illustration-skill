@@ -96,6 +96,15 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
   --global
 ```
 
+也可以使用 GitHub CLI 的 Agent Skills 命令安装：
+
+```bash
+gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
+  scidraw-scientific-figure \
+  --agent codex \
+  --scope user
+```
+
 安装完成后，重启 Codex 让新 skill 生效。
 
 ## ImageGen 与 API
@@ -110,7 +119,7 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 - base URL
 - 当前 agent 所要求的其他图片生成参数
 
-具体的 API adapter 调用方式写在 `SKILL.md` 中，由 agent 在需要时读取并执行；普通用户不需要手动运行脚本。
+具体的 API adapter 调用方式写在 `skills/scidraw-scientific-figure/SKILL.md` 中，由 agent 在需要时读取并执行；普通用户不需要手动运行脚本。
 
 如果当前环境既没有内置 ImageGen，也没有可用的图片 API，可以使用 [SciDraw AI 在线生成](https://sci-draw.com/ai-drawing)。
 
