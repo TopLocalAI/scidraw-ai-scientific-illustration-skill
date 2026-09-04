@@ -5,30 +5,31 @@
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
-A Codex-oriented skill for generating high-quality scientific figure images. It can also be used in Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
+A reusable agent skill for generating high-quality scientific figures with the official SciDraw AI web app and public API. It works with Codex, Claude Code, OpenClaw, Hermes Agent, and other agents that support `SKILL.md`.
 
 > [!TIP]
-> This skill supports two generation routes: Codex built-in ImageGen, or an image generation API already configured in the current agent.  
-> If you have neither built-in ImageGen nor an available image API, you can use [SciDraw AI](https://sci-draw.com/ai-drawing) online:
+> Use [SciDraw AI](https://sci-draw.com/ai-drawing) directly in the browser, or connect the included Python client to the official SciDraw AI API:
 >
 > - [AI Drawing](https://sci-draw.com/ai-drawing)
 > - [SciDraw AI website](https://sci-draw.com/)
+> - [Create an API key](https://sci-draw.com/settings/api-keys)
+> - [API documentation](https://sci-draw.com/docs/api)
 > - [Convert tools for SVG/PPTX/PDF/TIFF workflows](https://sci-draw.com/convert)
 >
 > The SciDraw AI platform supports AI Drawing, sketch-to-professional-figure workflows, image editing, editable SVG/PPTX export, and publication-ready PNG/PDF/TIFF export. This skill covers scientific figure generation and prompt structuring inside agent workflows.
 
 ## Friendly Note
 
-This skill is not the full SciDraw AI product, and it is not an editable PPT or SVG generator. It is a lightweight agent workflow: the agent interprets your scientific communication goal and preferably uses built-in ImageGen to generate a scientific figure draft.
+This repository is the official agent entry point for SciDraw AI. The skill plans a scientific figure, sends generation requests to SciDraw AI when `SCIDRAW_API_KEY` is configured, downloads the result, and guides review and iteration. It does not silently substitute another image provider.
 
-If you already use SciDraw AI on the web, treat this skill as a companion tool for quick drafts, prompt refinement, and structure planning inside Codex. For SVG, PPTX, batch conversion, and production export, return to the SciDraw AI platform.
+For interactive editing, SVG/PPTX conversion, batch workflows, and publication exports, use the full SciDraw AI web platform.
 
 ## Features
 
 - Figure-by-figure iteration: by default, the skill structures prompts and outputs around one scientific figure at a time, making layout, labels, and style easier to review. Multi-figure work can be generated figure by figure.
-- Built-in ImageGen first: in Codex-style environments, no API key is usually required.
-- Image API support: if the current agent supports an external image API, use the configured model, API key, and base URL.
-- Alternative when no backend is available: if there is neither ImageGen nor an image API, use SciDraw AI online.
+- Official SciDraw backend: direct API generation uses `SCIDRAW_API_KEY` and the included standard-library Python client.
+- Browser fallback: without an API key, use the SciDraw AI online drawing workflow.
+- No provider confusion: another image backend is used only when the user explicitly requests it.
 - Scientific use cases: roadmaps, mechanisms, method flows, research frameworks, model diagrams, and graphical abstract drafts.
 - Source-aware prompting: when users provide source figures, labels, axes, or screenshots, the workflow can require preservation of key details.
 - Platform handoff: for editable SVG/PPTX export, PNG/PDF/TIFF export, and full project workflows, use SciDraw AI on the web.
@@ -91,7 +92,7 @@ Please install this SciDraw AI scientific illustration skill: https://github.com
 
 ```bash
 npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  --skill scidraw-ai-scientific-figure \
+  --skill scidraw-ai-scientific-illustration \
   --agent codex \
   --global
 ```
@@ -100,35 +101,32 @@ You can also install it with GitHub CLI Agent Skills:
 
 ```bash
 gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  scidraw-ai-scientific-figure \
+  scidraw-ai-scientific-illustration \
   --agent codex \
   --scope user
 ```
 
 Restart Codex after installation.
 
-## ImageGen and API
+## SciDraw AI API
 
 > [!TIP]
-> In Codex, if built-in ImageGen is available, you usually do not need an API key.
+> Direct API generation consumes SciDraw AI credits. The skill asks for confirmation before starting a credit-consuming request.
 
-If the current agent does not provide built-in ImageGen but you have an image generation API, this skill can still be used. Provide the key details required by your API service to the agent, such as:
+Create a key at [SciDraw AI API Keys](https://sci-draw.com/settings/api-keys), then store it locally without committing it:
 
-- image model name
-- API key
-- base URL
-- any additional image generation parameters required by the current agent
+```bash
+export SCIDRAW_API_KEY='sd_YOUR_KEY'
+```
 
-The concrete API adapter instructions live in `skills/scidraw-ai-scientific-figure/SKILL.md` and are meant for the agent to read and execute when needed. Ordinary users do not need to run the script manually.
-
-If the current environment has neither built-in ImageGen nor an available image API, use [SciDraw AI online](https://sci-draw.com/ai-drawing).
+The included client uses Python 3 standard-library modules only. It calls `POST /api/v1/images/generations`, polls the returned job, and downloads the generated image. See the [API documentation](https://sci-draw.com/docs/api) and `skills/scidraw-ai-scientific-illustration/SKILL.md` for the complete workflow. Never paste or commit a real key.
 
 ## Usage
 
 Ask Codex, Claude Code, OpenClaw, or Hermes Agent to use this skill explicitly:
 
 ```text
-Use the scidraw-ai-scientific-figure skill to generate a 16:9 scientific roadmap figure.
+Use the scidraw-ai-scientific-illustration skill to generate a 16:9 scientific roadmap figure with SciDraw AI.
 ```
 
 A strong request should include:
@@ -143,7 +141,7 @@ A strong request should include:
 Example prompt:
 
 ```text
-Use the scidraw-ai-scientific-figure skill to generate a scientific roadmap figure.
+Use the scidraw-ai-scientific-illustration skill to generate a scientific roadmap figure with SciDraw AI.
 Aspect ratio: 16:9 landscape.
 Topic: multi-omics disease stratification and biomarker discovery.
 Structure: data acquisition -> AI integration -> explainability -> patient stratification -> clinical validation.
@@ -176,7 +174,7 @@ SciDraw AI provides:
 ## FAQ
 
 - Do I need an API key?  
-  Usually no in Codex when built-in ImageGen is available. If there is no built-in image tool, you can still use this skill when the current agent has an image generation API configured.
+  Yes for direct API generation. Without one, use the linked SciDraw AI browser workflow.
 - Does this skill export SVG?  
   The skill itself outputs an image. For SVG/PPTX editable export, use SciDraw AI’s convert workflow.
 - Can it generate multiple figures?  

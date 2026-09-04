@@ -5,30 +5,31 @@
 [![GitHub stars](https://img.shields.io/github/stars/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=stars)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TopLocalAI/scidraw-ai-scientific-illustration-skill?style=flat&logo=github&label=forks)](https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill/forks)
 
-一个面向 Codex 的科研画图 skill，也可在 Claude Code、OpenClaw、Hermes Agent 等支持 `SKILL.md` 的 agent 中使用。它的目标非常明确：把研究想法、论文方法、基金路线、实验流程或模型结构转换成高质量科研图像。
+SciDraw AI 官方科研画图 Skill，可在 Codex、Claude Code、OpenClaw、Hermes Agent 等支持 `SKILL.md` 的 Agent 中使用。它把研究想法、论文方法、基金路线、实验流程或模型结构转换成清晰的科研图，并支持调用 SciDraw AI 官方 API。
 
 > [!TIP]
-> 这个 skill 支持两类生成路径：Codex 内置 ImageGen，或当前 agent 已配置好的图片生成 API。  
-> 如果你既没有内置 ImageGen，也没有可用的图片 API，可以使用 [SciDraw AI](https://sci-draw.com/ai-drawing) 在线生成：
+> 你可以直接使用 [SciDraw AI](https://sci-draw.com/ai-drawing) 网页版，也可以配置官方 API 后通过内置 Python 客户端生成：
 >
 > - [AI Drawing 主入口](https://sci-draw.com/ai-drawing)
 > - [SciDraw AI 官网](https://sci-draw.com/)
+> - [创建 API Key](https://sci-draw.com/settings/api-keys)
+> - [API 文档](https://sci-draw.com/docs/api)
 > - [图片转 SVG/PPTX/PDF/TIFF 等转换工具](https://sci-draw.com/convert)
 >
 > SciDraw AI 平台支持 AI Drawing、草图转专业图、图片编辑、SVG/PPTX 可编辑导出、PNG/PDF/TIFF 出版级导出等能力；本 skill 覆盖 agent 里的科研图生成与提示词整理流程。
 
 ## 温馨提示
 
-这个 skill 不是完整的 SciDraw AI 产品，也不是可编辑 PPT 或 SVG 生成器。它更像一个轻量工作流：在 agent 对话中，让模型先理解你的科研表达目标，再优先调用内置 ImageGen 生成科研图初稿。
+这是 SciDraw AI 的官方 Agent 入口。配置 `SCIDRAW_API_KEY` 后，Skill 会规划科研图、调用 SciDraw AI 官方 API、下载结果并指导检查与迭代，不会在未说明的情况下替换成其他图片服务。
 
-如果你已经在使用 SciDraw AI 网站，建议把这个 skill 当作补充：用于在 Codex 里快速试图、沉淀提示词、整理科研图结构；最终需要 SVG、PPTX、批量转换或出版格式导出时，再回到 SciDraw AI 平台完成。
+需要交互编辑、SVG/PPTX 转换、批量工作流或出版格式导出时，请使用完整的 SciDraw AI 网页版。
 
 ## 特点
 
 - 逐图迭代：默认按单幅科研图组织提示词和输出，方便确认结构、风格和标签；需要多张图时可以按图逐张生成。
-- Codex 优先：在支持内置 ImageGen 的环境中，默认走内置图像能力，不要求 API key。
-- 支持图片 API：如果当前 agent 支持外部图片 API，可使用用户已配置的模型、API key 和 base URL 完成生成。
-- 无可用生成后端时给出替代入口：如果既没有 ImageGen，也没有图片 API，再提示使用 SciDraw AI 网站。
+- SciDraw AI 官方后端：直接 API 生成使用 `SCIDRAW_API_KEY` 和仅依赖 Python 标准库的客户端。
+- 网页版替代入口：未配置 API key 时，使用 SciDraw AI 在线科研绘图。
+- 避免后端混淆：只有用户明确要求时才改用其他图片服务。
 - 科研场景友好：适合技术路线图、机制示意图、方法流程图、模型结构图、研究框架图和图文摘要草稿。
 - 源图约束：当用户提供实验图、截图、坐标轴或论文原图时，可要求保留关键标签、数值、单位和结构关系。
 - 平台互补：需要 SVG/PPTX 可编辑导出、PNG/PDF/TIFF 出版级导出、多轮编辑和完整项目管理时，推荐使用 SciDraw AI 网站。
@@ -91,7 +92,7 @@ assets/examples/
 
 ```bash
 npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  --skill scidraw-ai-scientific-figure \
+  --skill scidraw-ai-scientific-illustration \
   --agent codex \
   --global
 ```
@@ -100,35 +101,32 @@ npx -y skills@latest add TopLocalAI/scidraw-ai-scientific-illustration-skill \
 
 ```bash
 gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
-  scidraw-ai-scientific-figure \
+  scidraw-ai-scientific-illustration \
   --agent codex \
   --scope user
 ```
 
 安装完成后，重启 Codex 让新 skill 生效。
 
-## ImageGen 与 API
+## SciDraw AI API
 
 > [!TIP]
-> 在 Codex 中，如果内置 ImageGen 可用，通常不需要配置 API key。你可以直接让 agent 使用这个 skill 生成科研图。
+> 直接调用 API 会消耗 SciDraw AI 积分，Skill 会在发起生成前说明分辨率和图片数量并请求确认。
 
-如果当前 agent 没有内置 ImageGen，但你有图片生成 API，也可以继续使用本 skill。你只需要把当前 API 服务要求的关键信息提供给 agent，例如：
+在 [SciDraw AI API Keys](https://sci-draw.com/settings/api-keys) 创建密钥，并仅保存在本地环境变量中：
 
-- 图片模型名
-- API key
-- base URL
-- 当前 agent 所要求的其他图片生成参数
+```bash
+export SCIDRAW_API_KEY='sd_YOUR_KEY'
+```
 
-具体的 API adapter 调用方式写在 `skills/scidraw-ai-scientific-figure/SKILL.md` 中，由 agent 在需要时读取并执行；普通用户不需要手动运行脚本。
-
-如果当前环境既没有内置 ImageGen，也没有可用的图片 API，可以使用 [SciDraw AI 在线生成](https://sci-draw.com/ai-drawing)。
+客户端仅使用 Python 3 标准库，调用 `POST /api/v1/images/generations`、轮询任务并下载生成结果。完整说明见 [API 文档](https://sci-draw.com/docs/api) 和 `skills/scidraw-ai-scientific-illustration/SKILL.md`。不要把真实密钥粘贴到对话、仓库或公开 Skill 包中。
 
 ## 使用方式
 
 在 Codex、Claude Code、OpenClaw 或 Hermes Agent 中明确指定使用本 skill，例如：
 
 ```text
-请使用 scidraw-ai-scientific-figure skill 生成 16:9 的国自然技术路线图。
+请使用 scidraw-ai-scientific-illustration skill，通过 SciDraw AI 生成 16:9 的国自然技术路线图。
 ```
 
 建议你的提示词包含这些信息：
@@ -143,7 +141,7 @@ gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
 示例提示词：
 
 ```text
-请使用 scidraw-ai-scientific-figure skill 生成科研技术路线图。
+请使用 scidraw-ai-scientific-illustration skill，通过 SciDraw AI 生成科研技术路线图。
 比例：16:9 横版。
 主题：基于多组学数据的疾病分型与生物标志物发现。
 结构：数据采集 -> AI 融合建模 -> 可解释性分析 -> 患者分层 -> 临床验证。
@@ -176,7 +174,7 @@ gh skill install TopLocalAI/scidraw-ai-scientific-illustration-skill \
 ## FAQ
 
 - 没有 API key 能用吗？  
-  在 Codex 内置 ImageGen 可用时可以直接用；如果没有内置能力，但当前 agent 已配置图片 API，也可以使用 API 生成。
+  不能直接调用 API，但可以使用上面链接的 SciDraw AI 网页版完成生成。
 - 这个 skill 能生成 SVG 吗？  
   这个 skill 本身输出图片。需要 SVG/PPTX 可编辑导出时，请使用 SciDraw AI 平台的转换工具。
 - 可以生成多张图吗？  
