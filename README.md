@@ -20,15 +20,16 @@ SciDraw AI 官方科研画图 Skill，可在 Codex、Claude Code、OpenClaw、He
 
 ## 温馨提示
 
-这是 SciDraw AI 的官方 Agent 入口。配置 `SCIDRAW_API_KEY` 后，Skill 会规划科研图、调用 SciDraw AI 官方 API、下载结果并指导检查与迭代，不会在未说明的情况下替换成其他图片服务。
+这是 SciDraw AI 的官方 Agent 入口。推荐先接入 [SciDraw AI MCP 服务](https://sci-draw.com/mcp)：用 SciDraw AI 账号登录即可，无需 API Key；Skill 检测到 MCP 工具时会直接用它画图。没有 MCP 时，配置 `SCIDRAW_API_KEY` 后，Skill 会规划科研图、调用 SciDraw AI 官方 API、下载结果并指导检查与迭代，不会在未说明的情况下替换成其他图片服务。
 
 需要交互编辑、SVG/PPTX 转换、批量工作流或出版格式导出时，请使用完整的 SciDraw AI 网页版。
 
 ## 特点
 
 - 逐图迭代：默认按单幅科研图组织提示词和输出，方便确认结构、风格和标签；需要多张图时可以按图逐张生成。
-- SciDraw AI 官方后端：直接 API 生成使用 `SCIDRAW_API_KEY` 和仅依赖 Python 标准库的客户端。
-- 网页版替代入口：未配置 API key 时，使用 SciDraw AI 在线科研绘图。
+- MCP 优先：已连接 SciDraw AI MCP 服务时直接调用，无需 API Key（Claude Code：`claude mcp add --transport http scidraw-ai https://sci-draw.com/api/mcp`；Codex：`codex mcp add scidraw-ai --url https://sci-draw.com/api/mcp`）。
+- API 备选：直接 API 生成使用 `SCIDRAW_API_KEY` 和仅依赖 Python 标准库的客户端。
+- 网页版替代入口：既没有 MCP 也没有 API key 时，使用 SciDraw AI 在线科研绘图。
 - 避免后端混淆：只有用户明确要求时才改用其他图片服务。
 - 科研场景友好：适合技术路线图、机制示意图、方法流程图、模型结构图、研究框架图和图文摘要草稿。
 - 源图约束：当用户提供实验图、截图、坐标轴或论文原图时，可要求保留关键标签、数值、单位和结构关系。
@@ -174,7 +175,7 @@ export SCIDRAW_API_KEY='sd_YOUR_KEY'
 ## FAQ
 
 - 没有 API key 能用吗？  
-  不能直接调用 API，但可以使用上面链接的 SciDraw AI 网页版完成生成。
+  能。接入 [SciDraw AI MCP 服务](https://sci-draw.com/mcp) 后用账号登录即可，Skill 会自动使用 MCP 工具。只有内置 Python 客户端需要 API key；两者都没有时，也可以用 SciDraw AI 网页版。
 - 这个 skill 能生成 SVG 吗？  
   这个 skill 本身输出图片。需要 SVG/PPTX 可编辑导出时，请使用 SciDraw AI 平台的转换工具。
 - 可以生成多张图吗？  

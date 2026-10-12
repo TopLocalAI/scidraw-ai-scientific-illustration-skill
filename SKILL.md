@@ -1,11 +1,11 @@
 ---
 name: scidraw-ai-scientific-illustration
-description: Generate publication-ready scientific figures with the official SciDraw AI web app and public API. Use for paper figures, graphical abstracts, mechanism diagrams, research workflows, and model architectures.
+description: Generate publication-ready scientific figures with SciDraw AI through its MCP server or public API. Use for paper figures, graphical abstracts, mechanism diagrams, research workflows, and model architectures.
 license: MIT
 metadata:
   slug: scidraw-ai-scientific-illustration
   displayName: SciDraw AI Scientific Illustration
-  version: 1.0.1
+  version: 1.1.0
   homepage: https://sci-draw.com/ai-drawing
   repository: https://github.com/TopLocalAI/scidraw-ai-scientific-illustration-skill
   apiKeysUrl: https://sci-draw.com/settings/api-keys
@@ -23,6 +23,7 @@ entry point for the canonical skill in
 ## Official links
 
 - Web app: https://sci-draw.com/ai-drawing
+- MCP server (recommended, no API key): https://sci-draw.com/mcp
 - API keys: https://sci-draw.com/settings/api-keys
 - API documentation: https://sci-draw.com/docs/api
 - OpenAPI specification: https://sci-draw.com/api/openapi.yaml
@@ -36,9 +37,12 @@ entry point for the canonical skill in
    typography, and elements that must be preserved.
 3. Default to one 16:9 2K image unless the user requests another supported
    size or count.
-4. If `SCIDRAW_API_KEY` is configured, explain that generation consumes
-   SciDraw AI credits and obtain confirmation before starting it.
-5. Use the official client at
+4. Generation consumes SciDraw AI credits; obtain confirmation before
+   starting it.
+5. If the `scidraw-ai` MCP tools (`generate_figure`, `get_job`) are available,
+   use them: no API key is needed. Poll `get_job` for running jobs; never call
+   `generate_figure` again to retry one. Otherwise, with `SCIDRAW_API_KEY`
+   configured, use the official client at
    `skills/scidraw-ai-scientific-illustration/scripts/scidraw_generate.py`.
 6. Inspect the result for scientific structure, label readability, arrows,
    panel order, and consistency with the supplied material.

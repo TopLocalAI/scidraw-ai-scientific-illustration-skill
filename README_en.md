@@ -20,7 +20,7 @@ A reusable agent skill for generating high-quality scientific figures with the o
 
 ## Friendly Note
 
-This repository is the official agent entry point for SciDraw AI. The skill plans a scientific figure, sends generation requests to SciDraw AI when `SCIDRAW_API_KEY` is configured, downloads the result, and guides review and iteration. It does not silently substitute another image provider.
+This repository is the official agent entry point for SciDraw AI. Connect the [SciDraw AI MCP server](https://sci-draw.com/mcp) first (account sign-in, no API key); when its tools are available the skill uses them. Otherwise the skill plans a scientific figure, sends generation requests to SciDraw AI when `SCIDRAW_API_KEY` is configured, downloads the result, and guides review and iteration. It does not silently substitute another image provider.
 
 For interactive editing, SVG/PPTX conversion, batch workflows, and publication exports, use the full SciDraw AI web platform.
 
@@ -174,7 +174,7 @@ SciDraw AI provides:
 ## FAQ
 
 - Do I need an API key?  
-  Yes for direct API generation. Without one, use the linked SciDraw AI browser workflow.
+  No, if you connect the [SciDraw AI MCP server](https://sci-draw.com/mcp): it signs in with your SciDraw AI account and the skill uses it automatically. An API key is only needed for the bundled Python client.
 - Does this skill export SVG?  
   The skill itself outputs an image. For SVG/PPTX editable export, use SciDraw AI’s convert workflow.
 - Can it generate multiple figures?  

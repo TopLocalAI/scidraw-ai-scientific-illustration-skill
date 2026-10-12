@@ -1,11 +1,11 @@
 ---
 name: scidraw-ai-scientific-illustration
-description: Generate publication-ready scientific figures with the official SciDraw AI web app and public API. Use for paper figures, graphical abstracts, mechanism diagrams, research workflows, and model architectures.
+description: Generate publication-ready scientific figures with SciDraw AI through its MCP server or public API. Use for paper figures, graphical abstracts, mechanism diagrams, research workflows, and model architectures.
 license: MIT
 metadata:
   slug: scidraw-ai-scientific-illustration
   displayName: SciDraw AI Scientific Illustration
-  version: 1.0.1
+  version: 1.1.0
   summary: Turn research ideas, paper methods, grant workflows, mechanisms, and model architectures into clear, iterative scientific figures with SciDraw AI.
   tags:
     - scientific-illustration
@@ -37,6 +37,7 @@ visual prompt, generate the figure, inspect it, and iterate when needed.
 ## SciDraw AI 官方入口
 
 - 在线科研绘图：https://sci-draw.com/ai-drawing
+- 接入 MCP（推荐，无需 API Key）：https://sci-draw.com/mcp
 - 创建 API Key：https://sci-draw.com/settings/api-keys
 - API 文档：https://sci-draw.com/docs/api
 - OpenAPI 规范：https://sci-draw.com/api/openapi.yaml
@@ -57,10 +58,20 @@ presentation rather than a figure image.
 
 ## Backend policy
 
-- This is a SciDraw AI skill. Use the official SciDraw AI API when
-  `SCIDRAW_API_KEY` is configured.
-- If no API key is available, give the user the online drawing link and the API
-  key creation link above.
+- This is a SciDraw AI skill. Pick the backend in this order:
+  1. **SciDraw AI MCP server** — if the `scidraw-ai` MCP tools
+     (`generate_figure`, `get_job`, `edit_figure`, `convert_figure`) are
+     available in this session, use them. They sign in with the user's SciDraw
+     AI account; no API key is needed.
+  2. **Official API** — otherwise, use the included client when
+     `SCIDRAW_API_KEY` is configured.
+- To connect the MCP server (recommended), see https://sci-draw.com/mcp, or
+  add `https://sci-draw.com/api/mcp` as a remote MCP server, e.g.
+  `claude mcp add --transport http scidraw-ai https://sci-draw.com/api/mcp`
+  or `codex mcp add scidraw-ai --url https://sci-draw.com/api/mcp`.
+- If neither is available, give the user the MCP setup link
+  (https://sci-draw.com/mcp), the online drawing link and the API key creation
+  link above.
 - Do not silently substitute another image provider. Use a different backend
   only when the user explicitly requests it.
 - Never ask the user to paste an API key into chat, a prompt, a committed file,
@@ -109,6 +120,12 @@ require any third-party package.
      the user's confirmation.
 
 4. Generate with SciDraw AI.
+   - With the MCP server: call `generate_figure` with `prompt`, `size`,
+     `aspect_ratio` and `count`. If it returns a `job_id` that is not final,
+     poll `get_job` (up to 50 seconds per call). Never call `generate_figure`
+     again to retry a running job; that starts a second paid job. To change a
+     result, call `edit_figure` with its image URL and only the change.
+   - With the API client:
    - Let `{skill_root}` be the directory containing this `SKILL.md`.
    - Save the final prompt to a temporary UTF-8 text file when it is long.
    - Run:
